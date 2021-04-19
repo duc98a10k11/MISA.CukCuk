@@ -80,7 +80,7 @@ namespace MISA.CukCuk.Api.Model
         /// <summary>
         /// Ngày tạo
         /// </summary>
-        public DateTime? CreatedDate { get; set; }
+        //public String CreatedDate { get; set; }
 
         /// <summary>
         /// Người tạo
@@ -90,7 +90,7 @@ namespace MISA.CukCuk.Api.Model
         /// <summary>
         /// Ngày sửa đổi
         /// </summary>
-        public DateTime ModifiedDate { get; set; }
+        //public String ModifiedDate { get; set; }
 
         /// <summary>
         /// Người sửa đổi

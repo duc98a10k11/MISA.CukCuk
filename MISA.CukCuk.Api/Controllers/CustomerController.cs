@@ -7,6 +7,7 @@ using System.Data;
 using MySqlConnector;
 using Dapper;
 using MISA.CukCuk.Api.Model;
+using MISA.ApplicationCore.Interfaces;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,7 +18,9 @@ namespace MISA.CukCuk.Api.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        // GET: api/<CustomerController>
+        ICustomerRepository _customerRepository;
+        //private CustomerRepository _customerService;
+        //GET: api/<CustomerController>
         /// <summary>
         /// Lấy dữ liệu toàn bộ khách hàng
         /// </summary>
@@ -25,44 +28,25 @@ namespace MISA.CukCuk.Api.Controllers
         /// HttpStatusCode 200 - có dữ liệu trả về
         /// HttpStatusCode 204 - không có dữ liệu trả về
         /// </returns>
-        /// CreatedBy: LMDuc (17/04/2021)
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    //1. Khởi tạo Connection
-        //    string connectionString = "" +
-        //       "Host = 47.241.69.179;" +
-        //       "Port = 3306;" +
-        //       "User Id = dev;" +
-        //       "Password = 12345678;" +
-        //       "Database = MF0_NVManh_CukCuk02;";
-        //    //2. Kết nối connection
-        //    IDbConnection dbConnection = new MySqlConnection(connectionString);
-        //    //3. Lấy dữ liệu từ DB
-
-        //    var customers = dbConnection.Query<Customer>("Proc_GetCustomers",commandType: CommandType.StoredProcedure);
-        //    //4. Trả về kết quả cho người dùng
-        //    if (customers != null)
-        //    {
-        //        return Ok(customers);
-        //    }
-        //    else
-        //    {
-        //        return NoContent();
-        //    }
-        //}
+        /// CreatedBy: LMDuc(17/04/2021)
         [HttpGet]
         public IActionResult Get()
         {
-            string connectionString = "" +
-                "Host = 47.241.69.179;" +
-                "Port = 3306;" +
-                "Database = MF0_NVManh_CukCuk02;" +
-                "User Id = dev;" +
-                "Password = 12345678";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var customers = dbConnection.Query<Customer>("SELECT * FROM Customer");
-            if(customers.Count() > 0)
+            ////1. Khởi tạo Connection
+            //string connectionString = "" +
+            //   "Host = 47.241.69.179;" +
+            //   "Port = 3306;" +
+            //   "User Id = dev;" +
+            //   "Password = 12345678;" +
+            //   "Database = MF0_NVManh_CukCuk02;";
+            ////2. Kết nối connection
+            //IDbConnection dbConnection = new MySqlConnection(connectionString);
+            ////3. Lấy dữ liệu từ DB
+
+            //var customers = dbConnection.Query<Customer>("Proc_GetCustomers", commandType: CommandType.StoredProcedure);
+            //4. Trả về kết quả cho người dùng
+            var customers = _customerRepository.GetAll();
+            if (customers != null)
             {
                 return Ok(customers);
             }
@@ -71,6 +55,7 @@ namespace MISA.CukCuk.Api.Controllers
                 return NoContent();
             }
         }
+        
         /// <summary>
         /// Lấy dữ liệu khách hàng theo id
         /// </summary>

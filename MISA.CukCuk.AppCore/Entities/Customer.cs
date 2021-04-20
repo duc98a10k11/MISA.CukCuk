@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace MISA.CukCuk.Api.Model
+namespace MISA.CukCuk.AppCore.Entities
 {
     /// <summary>
     /// Thông tin khách hàng
     /// </summary>
-    /// CreatedBy: LMDuc
-    /// CreateDate: 17/04/2021
+    /// CreatedBy: LMDuc (20/04/2021)
     public class Customer
     {
         /// <summary>
@@ -97,6 +97,6 @@ namespace MISA.CukCuk.Api.Model
         /// </summary>
         public String ModifiedBy { get; set; }
 
-       
+
     }
 }

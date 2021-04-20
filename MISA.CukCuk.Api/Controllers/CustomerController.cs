@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using System.Data;
 using MySqlConnector;
 using Dapper;
-using MISA.CukCuk.Api.Model;
+
+using MISA.CukCuk.AppCore.Interfaces.Repository;
+using MISA.CukCuk.AppCore.Interfaces.Service;
+using MISA.CukCuk.AppCore.Entities;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,7 +20,21 @@ namespace MISA.CukCuk.Api.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        // GET: api/<CustomerController>
+        ICustomerRepository _customerRepository;
+        ICustomerService _customerService;
+
+        /// <summary>
+        /// Hàm khởi tạo
+        /// </summary>
+        /// <param name="customerService"></param>
+        /// <param name="customerRepository"></param>
+        /// CreatedBy: LMDuc (20/04/2021)
+        public CustomerController(ICustomerService customerService, ICustomerRepository customerRepository)
+        {
+            _customerRepository = customerRepository;
+            _customerService = customerService;
+        }
+
         /// <summary>
         /// Lấy dữ liệu toàn bộ khách hàng
         /// </summary>
@@ -25,44 +42,14 @@ namespace MISA.CukCuk.Api.Controllers
         /// HttpStatusCode 200 - có dữ liệu trả về
         /// HttpStatusCode 204 - không có dữ liệu trả về
         /// </returns>
-        /// CreatedBy: LMDuc (17/04/2021)
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    //1. Khởi tạo Connection
-        //    string connectionString = "" +
-        //       "Host = 47.241.69.179;" +
-        //       "Port = 3306;" +
-        //       "User Id = dev;" +
-        //       "Password = 12345678;" +
-        //       "Database = MF0_NVManh_CukCuk02;";
-        //    //2. Kết nối connection
-        //    IDbConnection dbConnection = new MySqlConnection(connectionString);
-        //    //3. Lấy dữ liệu từ DB
-
-        //    var customers = dbConnection.Query<Customer>("Proc_GetCustomers",commandType: CommandType.StoredProcedure);
-        //    //4. Trả về kết quả cho người dùng
-        //    if (customers != null)
-        //    {
-        //        return Ok(customers);
-        //    }
-        //    else
-        //    {
-        //        return NoContent();
-        //    }
-        //}
+        /// CreatedBy: LMDuc (20/04/2021)
         [HttpGet]
         public IActionResult Get()
         {
-            string connectionString = "" +
-                "Host = 47.241.69.179;" +
-                "Port = 3306;" +
-                "Database = MF0_NVManh_CukCuk02;" +
-                "User Id = dev;" +
-                "Password = 12345678";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            var customers = dbConnection.Query<Customer>("SELECT * FROM Customer");
-            if(customers.Count() > 0)
+            //1. Lấy dữ liệu
+            var customers = _customerRepository.GetAll();
+            //2. Trả về cho người dùng
+            if (customers != null)
             {
                 return Ok(customers);
             }
@@ -71,6 +58,7 @@ namespace MISA.CukCuk.Api.Controllers
                 return NoContent();
             }
         }
+
         /// <summary>
         /// Lấy dữ liệu khách hàng theo id
         /// </summary>
@@ -79,29 +67,16 @@ namespace MISA.CukCuk.Api.Controllers
         /// HttpStatusCode 200 - có dữ liệu trả về
         /// HttpStatusCode 204 - không có dữ liệu trả về
         /// </returns>
-        /// CreatedBy: LMDuc (17/04/2021)
-
-        // GET api/<CustomerController>/5
+        /// CreatedBy: LMDuc (20/04/2021)
         [HttpGet("{CustomerId}")]
         public IActionResult Get(Guid CustomerId)
         {
-            //1. Khởi tạo Connection
-            string connectionString = "" +
-                "Host = 47.241.69.179;" +
-                "Port = 3306;" +
-                "User Id = dev;" +
-                "Password = 12345678;" +
-                "Database = MF0_NVManh_CukCuk02;";
-            //2. Kết nối connection
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
-            //3. Lấy dữ liệu từ DB
-            //DynamicParameters dynamicParameters = new DynamicParameters();
-            //dynamicParameters.Add("CustomerId", CustomerId);
-            var customers = dbConnection.QueryFirstOrDefault<Customer>("Proc_GetCustomerById", new { CustomerId = CustomerId }, commandType: CommandType.StoredProcedure);
-            //4. Trả về kết quả cho người dùng
-            if (customers != null)
+            //1. Lấy dữ liệu
+            var customer = _customerService.GetCustomerById(CustomerId);
+            //2. Trả về cho người dùng
+            if (customer != null)
             {
-                return Ok(customers);
+                return Ok(customer);
             }
             else
             {
@@ -120,48 +95,50 @@ namespace MISA.CukCuk.Api.Controllers
         /// HttpStatusCode 400 - dữ liệu đầu vào không hợp lệ
         /// HttpStatusCode 500 - có lỗi xảy ra phía server (exception,....)
         /// </returns>
-        /// CreatedBy: LMDuc (17/04/2021)
+        /// CreatedBy: LMDuc (20/04/2021)
         [HttpPost]
         public IActionResult Post(Customer customer)
         {
 
 
-            // Validate dữ liệu:
-            //- check các thông tin bắt buộc nhập
-            if (string.IsNullOrEmpty(customer.CustomerCode))
-            {
-                var response = new
-                {
-                    devMsg = "Mã khách hàng không được phép để trống",
-                    MISACode = "001"
-                };
-                return BadRequest(response);
-            }
-            // - check mã có trùng hay không?
-            string connectionString = "" +
-                "Host = 47.241.69.179;" +
-                "Port = 3306;" +
-                "User Id = dev;" +
-                "Password = 12345678;" +
-                "Database = MF0_NVManh_CukCuk02;";
-            IDbConnection dbconnection = new MySqlConnection(connectionString);
-            DynamicParameters dynamicParameters = new DynamicParameters();
-            dynamicParameters.Add("@m_CustomerCode", customer.CustomerCode);
-            var customerCodeExists = dbconnection.QueryFirstOrDefault<bool>("Proc_CheckCustomerCodeExists", dynamicParameters, commandType: CommandType.StoredProcedure);
-            if (customerCodeExists)
-            {
-                var response = new
-                {
-                    devMsg = "Mã khách hàng đã tồn tại trong hệ thống!",
-                    MISACode = "002"
-                };
-                return BadRequest(response);
-            }
+            //// Validate dữ liệu:
+            ////- check các thông tin bắt buộc nhập
+            //if (string.IsNullOrEmpty(customer.CustomerCode))
+            //{
+            //    var response = new
+            //    {
+            //        devMsg = "Mã khách hàng không được phép để trống",
+            //        MISACode = "001"
+            //    };
+            //    return BadRequest(response);
+            //}
+            //// - check mã có trùng hay không?
+            //string connectionString = "" +
+            //    "Host = 47.241.69.179;" +
+            //    "Port = 3306;" +
+            //    "User Id = dev;" +
+            //    "Password = 12345678;" +
+            //    "Database = MF0_NVManh_CukCuk02;";
+            //IDbConnection dbconnection = new MySqlConnection(connectionString);
+            //DynamicParameters dynamicParameters = new DynamicParameters();
+            //dynamicParameters.Add("@m_CustomerCode", customer.CustomerCode);
+            //var customerCodeExists = dbconnection.QueryFirstOrDefault<bool>("Proc_CheckCustomerCodeExists", dynamicParameters, commandType: CommandType.StoredProcedure);
+            //if (customerCodeExists)
+            //{
+            //    var response = new
+            //    {
+            //        devMsg = "Mã khách hàng đã tồn tại trong hệ thống!",
+            //        MISACode = "002"
+            //    };
+            //    return BadRequest(response);
+            //}
+
+
             // Thực hiện thêm dữ liệu
-            var rowAffect = dbconnection.Execute("Proc_InsertCustomer", param: customer, commandType: CommandType.StoredProcedure);
+            int rowAffect = _customerService.Insert(customer);
             if (rowAffect > 0)
             {
-                return StatusCode(200, rowAffect);
+                return StatusCode(201, rowAffect);
             }
             else
             {
@@ -185,29 +162,12 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPut("{CustomerId}")]
         public IActionResult Put(Guid CustomerId, Customer customer)
         {
-            //1. Khởi tạo Connection
-            string connectionString = "" +
-                "Host = 47.241.69.179;" +
-                "Port = 3306;" +
-                "User Id = dev;" +
-                "Password = 12345678;" +
-                "Database = MF0_NVManh_CukCuk02;";
-            //2. Kết nối DB
-            IDbConnection dbconnection = new MySqlConnection(connectionString);
-            //3. Thực hiện sửa dữ liệu trên db
-            DynamicParameters dynamicParameters = new DynamicParameters();
-            dynamicParameters.AddDynamicParams(customer);
-            //dynamicParameters.AddDynamicParams("@m_CustomerId", CustomerId, "@m_CustomerCode", customer.CustomerCode,
-            //    "@m_FullName", customer.FullName, "@m_MemberCardCode", customer.MemberCardCode,
-            //    "@m_CustomerGroupId", customer.CustomerGroupId, "@m_DateOfBirth", customer.DateOfBirth,
-            //    "@m_Gender", customer.Gender, "@m_Email", customer.Email, "@m_PhoneNumber", customer.PhoneNumber,
-            //    "@m_CompanyName", customer.CompanyName, "@m_CompanyTaxCode", customer.CompanyTaxCode,
-            //    "@m_Address", customer.Address, "@m_ModifiedDate", customer.ModifiedDate);
-            var rowAffect = dbconnection.Query<bool>("Proc_UpdateCustomer", dynamicParameters, commandType: CommandType.StoredProcedure);
+
+            int rowAffect = _customerService.Update(customer);
             //4. kiểm tra kết quả
-            if (rowAffect != null)
+            if (rowAffect > 0)
             {
-                return Ok("Thông tin đã được chỉnh sửa");
+                return Ok(rowAffect);
             }
             else
             {
@@ -215,11 +175,24 @@ namespace MISA.CukCuk.Api.Controllers
 
             }
 
-            // DELETE api/<CustomerController>/5
-            //[HttpDelete("{id}")]
-            //public void Delete(int id)
-            //{
-            //}
+            
+
         }
+        [HttpDelete("{customerId}")]
+        public IActionResult Delete(Guid customerId)
+        {
+            //1. Thực hiện xóa
+            int rowAffect = _customerService.Delete(customerId);
+            if(rowAffect > 0)
+            {
+                return Ok(rowAffect);
+            }
+            else
+            {
+                return NoContent();
+            }
+            
+        }
+
     }
 }

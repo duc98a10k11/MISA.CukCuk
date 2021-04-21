@@ -10,6 +10,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MISA.CukCuk.Api.Middware;
+using MISA.CukCuk.AppCore.Interfaces.Repository;
+using MISA.CukCuk.AppCore.Interfaces.Service;
+using MISA.CukCuk.AppCore.Service;
+using MISA.CukCuk.Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +39,8 @@ namespace MISA.CukCuk.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MISA.CukCuk.Api", Version = "v1" });
             });
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +55,7 @@ namespace MISA.CukCuk.Api
 
             // Hook in the global error-handling middleware
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+
 
             app.UseHttpsRedirection();
 

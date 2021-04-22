@@ -46,16 +46,24 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            //1. Lấy dữ liệu
-            var customers = _customerRepository.GetAll();
-            //2. Trả về cho người dùng
-            if (customers != null)
+            try
             {
-                return Ok(customers);
+                //1. Lấy dữ liệu
+                var customers = _customerRepository.GetAll();
+                //2. Trả về cho người dùng
+                if (customers != null)
+                {
+                    return Ok(customers);
+                }
+                else
+                {
+                    return NoContent();
+                }
             }
-            else
+            catch (Exception)
             {
-                return NoContent();
+
+                throw;
             }
         }
 
@@ -68,19 +76,27 @@ namespace MISA.CukCuk.Api.Controllers
         /// HttpStatusCode 204 - không có dữ liệu trả về
         /// </returns>
         /// CreatedBy: LMDuc (20/04/2021)
-        [HttpGet("{CustomerId}")]
+        [HttpGet("CustomerId")]
         public IActionResult Get(Guid CustomerId)
         {
-            //1. Lấy dữ liệu
-            var customer = _customerService.GetCustomerById(CustomerId);
-            //2. Trả về cho người dùng
-            if (customer != null)
+            try
             {
-                return Ok(customer);
+                //1. Lấy dữ liệu
+                var customer = _customerService.GetCustomerById(CustomerId);
+                //2. Trả về cho người dùng
+                if (customer != null)
+                {
+                    return Ok(customer);
+                }
+                else
+                {
+                    return NoContent();
+                }
             }
-            else
+            catch (Exception)
             {
-                return NoContent();
+
+                throw;
             }
 
         }
@@ -99,50 +115,23 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPost]
         public IActionResult Post(Customer customer)
         {
-
-
-            //// Validate dữ liệu:
-            ////- check các thông tin bắt buộc nhập
-            //if (string.IsNullOrEmpty(customer.CustomerCode))
-            //{
-            //    var response = new
-            //    {
-            //        devMsg = "Mã khách hàng không được phép để trống",
-            //        MISACode = "001"
-            //    };
-            //    return BadRequest(response);
-            //}
-            //// - check mã có trùng hay không?
-            //string connectionString = "" +
-            //    "Host = 47.241.69.179;" +
-            //    "Port = 3306;" +
-            //    "User Id = dev;" +
-            //    "Password = 12345678;" +
-            //    "Database = MF0_NVManh_CukCuk02;";
-            //IDbConnection dbconnection = new MySqlConnection(connectionString);
-            //DynamicParameters dynamicParameters = new DynamicParameters();
-            //dynamicParameters.Add("@m_CustomerCode", customer.CustomerCode);
-            //var customerCodeExists = dbconnection.QueryFirstOrDefault<bool>("Proc_CheckCustomerCodeExists", dynamicParameters, commandType: CommandType.StoredProcedure);
-            //if (customerCodeExists)
-            //{
-            //    var response = new
-            //    {
-            //        devMsg = "Mã khách hàng đã tồn tại trong hệ thống!",
-            //        MISACode = "002"
-            //    };
-            //    return BadRequest(response);
-            //}
-
-
-            // Thực hiện thêm dữ liệu
-            int rowAffect = _customerService.Insert(customer);
-            if (rowAffect > 0)
+            try
             {
-                return StatusCode(201, rowAffect);
+                // Thực hiện thêm dữ liệu
+                int rowAffect = _customerService.Insert(customer);
+                if (rowAffect > 0)
+                {
+                    return StatusCode(201, rowAffect);
+                }
+                else
+                {
+                    return NoContent();
+                }
             }
-            else
+            catch (Exception)
             {
-                return NoContent();
+
+                throw;
             }
 
 
@@ -159,40 +148,63 @@ namespace MISA.CukCuk.Api.Controllers
         /// </return>
         /// CreatedBy: LMDuc (19/04/2021)
         // PUT api/<CustomerController>/5
-        [HttpPut("{CustomerId}")]
+        [HttpPut("CustomerId")]
         public IActionResult Put(Guid CustomerId, Customer customer)
         {
 
-            int rowAffect = _customerService.Update(customer);
-            //4. kiểm tra kết quả
-            if (rowAffect > 0)
+            try
             {
-                return Ok(rowAffect);
+                int rowAffect = _customerService.Update(customer);
+                //4. kiểm tra kết quả
+                if (rowAffect > 0)
+                {
+                    return Ok(rowAffect);
+                }
+                else
+                {
+                    return NoContent();
+                }
             }
-            else
+            catch (Exception)
             {
-                return NoContent();
 
+                throw;
             }
 
             
 
         }
-        [HttpDelete("{customerId}")]
+
+        /// <summary>
+        /// Xóa khách hàng theo id
+        /// </summary>
+        /// <param name="customerId">id khách hàng</param>
+        /// <returns></returns>
+        /// CreatedBy: LMDuc (22/04/2021)
+        [HttpDelete("customerId")]
         public IActionResult Delete(Guid customerId)
         {
-            //1. Thực hiện xóa
-            int rowAffect = _customerService.Delete(customerId);
-            if(rowAffect > 0)
+            try
             {
-                return Ok(rowAffect);
+                //1. Thực hiện xóa
+                int rowAffect = _customerService.Delete(customerId);
+                if (rowAffect > 0)
+                {
+                    return Ok(rowAffect);
+                }
+                else
+                {
+                    return NoContent();
+                }
             }
-            else
+            catch (Exception)
             {
-                return NoContent();
+
+                throw;
             }
             
         }
 
+      
     }
 }

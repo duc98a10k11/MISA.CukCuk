@@ -51,17 +51,6 @@ namespace MISA.CukCuk.AppCore.Interfaces.Service
         /// <returns>số bản ghi đã xóa</returns>
         /// CreatedBy: LMDuc (20/04/20210)
         public int Delete(Guid customerId);
-        
-        /// <summary>
-        /// Kiểm tra trùng thông tin mã khách hàng 
-        /// </summary>
-        /// <param name="customerCode">mã khách hàng</param>
-        /// <returns>
-        /// true - mã khách hàng bị trùng
-        /// false - mã khách hàng không bị trùng
-        /// </returns>
-        /// CreateBy: LMDuc (20/04/2021)
-        public bool CheckCustomerCodeExists(string customerCode);
-        
+       
     }
 }

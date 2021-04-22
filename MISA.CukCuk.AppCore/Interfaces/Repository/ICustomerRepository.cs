@@ -58,5 +58,7 @@ namespace MISA.CukCuk.AppCore.Interfaces.Repository
         /// CreateBy: LMDuc (20/04/2021)
         public bool CheckCustomerCodeExists(string customerCode);
 
+       
+
     }
 }

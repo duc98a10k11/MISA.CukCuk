@@ -13,4 +13,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MISA.CukCuk.Core\MISA.CukCuk.Core.csproj" />
+    <ProjectReference Include="..\MISA.CukCuk.Infrastructure\MISA.CukCuk.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

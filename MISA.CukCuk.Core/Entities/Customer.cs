@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace MISA.CukCuk.Api.Model
+namespace MISA.CukCuk.Core.Entities
 {
     /// <summary>
     /// Thông tin khách hàng
     /// </summary>
-    /// CreatedBy: LMDuc
-    /// CreateDate: 17/04/2021
+    /// CreatedBy: LMDuc (27/04/2021)
     public class Customer
     {
         /// <summary>
@@ -20,12 +20,12 @@ namespace MISA.CukCuk.Api.Model
         /// <summary>
         /// Mã khách hàng
         /// </summary>
-        public String CustomerCode { get; set; }
+        public string CustomerCode { get; set; }
 
         /// <summary>
         /// Họ và tên
         /// </summary>
-        public String FullName { get; set; }
+        public string FullName { get; set; }
 
         /// <summary>
         /// Giới tính
@@ -35,7 +35,7 @@ namespace MISA.CukCuk.Api.Model
         /// <summary>
         /// Mã thẻ thành viên
         /// </summary>
-        public String MemberCardCode { get; set; }
+        public string MemberCardCode { get; set; }
 
         /// <summary>
         /// Mã nhóm khách hàng
@@ -45,7 +45,7 @@ namespace MISA.CukCuk.Api.Model
         /// <summary>
         /// Số điện thoại
         /// </summary>
-        public String PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         /// <summary>
         /// Ngày sinh
@@ -55,48 +55,46 @@ namespace MISA.CukCuk.Api.Model
         /// <summary>
         /// Tên công ty
         /// </summary>
-        public String CompanyName { get; set; }
+        public string CompanyName { get; set; }
 
         /// <summary>
         /// Mã số thuế công ty
         /// </summary>
-        public String CompanyTaxCode { get; set; }
+        public string CompanyTaxCode { get; set; }
 
         /// <summary>
         /// Email
         /// </summary>
-        public String Email { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// Địa chỉ
         /// </summary>
-        public String Address { get; set; }
+        public string Address { get; set; }
 
         /// <summary>
         /// Ghi chú
         /// </summary>
-        public String Note { get; set; }
+        public string Note { get; set; }
 
         /// <summary>
         /// Ngày tạo
         /// </summary>
-        //public String CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         /// <summary>
         /// Người tạo
         /// </summary>
-        public String CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
         /// <summary>
         /// Ngày sửa đổi
         /// </summary>
-        //public String ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
         /// <summary>
         /// Người sửa đổi
         /// </summary>
-        public String ModifiedBy { get; set; }
-
-       
+        public string ModifiedBy { get; set; }
     }
 }

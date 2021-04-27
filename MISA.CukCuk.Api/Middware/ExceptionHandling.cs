@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Api.Middware
 {
+    /// <summary>
+    /// middleware exception
+    /// </summary>
+    /// CreatedBy: LMDuc (27/04/2021)
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
@@ -29,6 +33,13 @@ namespace MISA.CukCuk.Api.Middware
             }
         }
 
+        /// <summary>
+        /// message lỗi
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="exception">lỗi bắt được</param>
+        /// <returns></returns>
+        /// CreateBy: LMDuc (27/04/2021)
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             //HttpStatusCode status;

@@ -10,6 +10,10 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Core.Services
 {
+    /// <summary>
+    /// Dịch vụ khách hàng
+    /// </summary>
+    /// CreatedBy: LMDuc (27/04/2021)
     public class CustomerService : BaseService<Customer>, ICustomerService
     {
         ICustomerRepository _customerRepository;
@@ -17,10 +21,17 @@ namespace MISA.CukCuk.Core.Services
         {
             _customerRepository = customerRepository;
         }
+
+        /// <summary>
+        /// Validate dữ liệu
+        /// </summary>
+        /// <param name="entity">dữ liệu cần validate</param>
+        /// CreatedBy: LMDuc(27/04/2021)
         protected override void Validate(Customer entity)
         {
             if (entity is Customer)
             {
+                // ép entity về kiểu customer
                 var customer = entity as Customer;
                 // validate dữ liệu:
                 // - check các thông tin bắt buộc nhập:

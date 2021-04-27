@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Infrastructure.Repository
 {
+    /// <summary>
+    /// Nhóm khách hàng
+    /// </summary>
+    /// CreatedBy: LMDuc (27/04/2021)
     public class CustomerGroupRepository : BaseRepository<CustomerGroup>, ICustomerGroupRepository
     {
 

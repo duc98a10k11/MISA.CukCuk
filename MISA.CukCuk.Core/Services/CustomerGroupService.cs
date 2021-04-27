@@ -9,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Core.Services
 {
+    /// <summary>
+    /// CustomerGroupService: dịch vụ nhóm khách hàng
+    /// </summary>
+    /// CreatedBy: LMDuc (27/04/2021)
     public class CustomerGroupService : BaseService<CustomerGroup>, ICustomerGroupService
     {
         ICustomerGroupRepository _customerGroupRepository;

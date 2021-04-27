@@ -11,8 +11,21 @@ using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Infrastructure.Repository
 {
+    /// <summary>
+    /// Khách hàng
+    /// </summary>
+    /// CreatedBy: LMDuc (27/04/2021)
     public class CustomerRepository : BaseRepository<Customer>, ICustomerRepository
     {
+        /// <summary>
+        /// kiểm tra tồn tại của mã khách hàng
+        /// </summary>
+        /// <param name="customerCode">Mã khách hàng</param>
+        /// <returns>
+        /// true - nếu mã khách hàng đã tồn tại
+        /// false - mã khách hàng chưa tồn tại
+        /// </returns>
+        /// CreatedBy: LMDuc (27/04/2021)
         public bool CheckCustomerCodeExist(string customerCode)
         {
             using (dbConnection = new MySqlConnection(connectionString))
@@ -24,12 +37,21 @@ namespace MISA.CukCuk.Infrastructure.Repository
             }
         }
 
+        /// <summary>
+        /// Kiểm tra tồn tại số điện thoại
+        /// </summary>
+        /// <param name="phonNumber">Số điện thoại</param>
+        /// <returns>
+        /// true - số điện thoại đã tồn tại
+        /// false - số điện thoại chưa tồn tại
+        /// </returns>
+        /// CreatedBy: LMDuc(27/04/2021)
         public bool CheckPhoneNumberExist(string phonNumber)
         {
             using (dbConnection = new MySqlConnection(connectionString))
             {
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@PhoneNumber", phonNumber);
+                parameters.Add("@m_PhoneNumber", phonNumber);
                 var check = dbConnection.QueryFirstOrDefault<bool>("Proc_CheckPhoneNumberExists", param: parameters, commandType: CommandType.StoredProcedure);
                 return check;
             }

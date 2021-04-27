@@ -37,7 +37,9 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
+                //lấy dữ liệu
                 var customerGroups = _customerGroupRepository.GetAll();
+                //kiểm tra và trả về kết quả
                 if (customerGroups.Count() > 0)
                 {
                     return Ok(customerGroups);
@@ -52,6 +54,7 @@ namespace MISA.CukCuk.Api.Controllers
                 throw;
             }
         }
+
         /// <summary>
         /// Lấy dữ liệu khách hàng theo id
         /// </summary>
@@ -61,13 +64,12 @@ namespace MISA.CukCuk.Api.Controllers
         /// HttpStatusCode 204 - không có dữ liệu trả về
         /// </returns>
         /// CreatedBy: LMDuc (27/04/2021)
-
-        // GET api/<CustomerController>/5
         [HttpGet("{CustomerGroupId}")]
         public IActionResult Get(Guid CustomerGroupId)
         {
             try
             {
+                //lấy dữ liệu từ db
                 var customerGroup = _customerGroupRepository.GetById(CustomerGroupId);
                 // Trả về kết quả cho người dùng
                 if (customerGroup != null)
@@ -104,6 +106,7 @@ namespace MISA.CukCuk.Api.Controllers
             {
                 // Thực hiện thêm dữ liệu
                 var rowAffect = _customerGroupRepository.Insert(customerGroup);
+                //kiểm tra và trả về kết quả
                 if (rowAffect > 0)
                 {
                     return StatusCode(200, rowAffect);
@@ -135,9 +138,10 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
+                //thực hiện cập nhật dữ liệu
                 var rowAffect = _customerGroupRepository.Update(customerGroup);
-                //4. kiểm tra kết quả
-                if (rowAffect != null)
+                // kiểm tra kết quả
+                if (rowAffect > 0)
                 {
                     return Ok(rowAffect);
                 }
@@ -167,8 +171,10 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
+                // thực hiện xóa
                 var rowAffect = _customerGroupRepository.Delete(id);
-                if (rowAffect != null)
+                // kiểm tra kết quả
+                if (rowAffect > 0)
                 {
                     return Ok(rowAffect);
                 }

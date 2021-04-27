@@ -25,15 +25,18 @@ namespace MISA.CukCuk.Api.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
+        /// <summary>
+        /// Contructor
+        /// </summary>
         ICustomerService _customerService;
         ICustomerRepository _customerRepository;
-
+        
         public CustomerController(ICustomerService customerService, ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
             _customerService = customerService;
         }
-        // GET: api/<CustomerController>
+
         /// <summary>
         /// Lấy dữ liệu toàn bộ khách hàng
         /// </summary>
@@ -42,13 +45,14 @@ namespace MISA.CukCuk.Api.Controllers
         /// HttpStatusCode 204 - không có dữ liệu trả về
         /// </returns>
         /// CreatedBy: LMDuc (27/04/2021)
-        
         [HttpGet]
         public IActionResult Get()
         {
             try
             {
+                // thực hiện lấy dữ liệu
                 var customers = _customerRepository.GetAll();
+                // kiểm tra và trả về kết quả
                 if (customers.Count() > 0)
                 {
                     return Ok(customers);
@@ -63,6 +67,7 @@ namespace MISA.CukCuk.Api.Controllers
                 throw;
             }
         }
+
         /// <summary>
         /// Lấy dữ liệu khách hàng theo id
         /// </summary>
@@ -72,13 +77,12 @@ namespace MISA.CukCuk.Api.Controllers
         /// HttpStatusCode 204 - không có dữ liệu trả về
         /// </returns>
         /// CreatedBy: LMDuc (27/04/2021)
-
-        // GET api/<CustomerController>/5
         [HttpGet("{CustomerId}")]
         public IActionResult Get(Guid CustomerId)
         {
             try
             {
+                // lấy dữ liệu
                 var customer = _customerRepository.GetById(CustomerId);
                 // Trả về kết quả cho người dùng
                 if (customer != null)
@@ -111,9 +115,11 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPost]
         public IActionResult Post(Customer customer)
         {
-            
+            try
+            {
                 // Thực hiện thêm dữ liệu
                 var rowAffect = _customerService.Insert(customer);
+                // kiểm tra và trả về kết quả
                 if (rowAffect > 0)
                 {
                     return StatusCode(200, rowAffect);
@@ -122,8 +128,12 @@ namespace MISA.CukCuk.Api.Controllers
                 {
                     return NoContent();
                 }
-            
-           
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         /// <summary>
@@ -141,9 +151,10 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
+                //Thực hiện cập nhật
                 var rowAffect = _customerService.Update(customer);
                 //4. kiểm tra kết quả
-                if (rowAffect != null)
+                if (rowAffect > 0)
                 {
                     return Ok(rowAffect);
                 }
@@ -173,8 +184,10 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
+                // thực hiện xóa
                 var rowAffect = _customerRepository.Delete(id);
-                if (rowAffect != null)
+                //kiểm tra kết quả trả về
+                if (rowAffect > 0)
                 {
                     return Ok(rowAffect);
                 }

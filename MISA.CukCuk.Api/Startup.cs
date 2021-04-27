@@ -42,6 +42,8 @@ namespace MISA.CukCuk.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MISA.CukCuk.Api", Version = "v1" });
             });
+
+            // sử dụng interface
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerGroupRepository, CustomerGroupRepository>();

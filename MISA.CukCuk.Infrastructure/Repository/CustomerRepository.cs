@@ -40,18 +40,18 @@ namespace MISA.CukCuk.Infrastructure.Repository
         /// <summary>
         /// Kiểm tra tồn tại số điện thoại
         /// </summary>
-        /// <param name="phonNumber">Số điện thoại</param>
+        /// <param name="phoneNumber">Số điện thoại</param>
         /// <returns>
         /// true - số điện thoại đã tồn tại
         /// false - số điện thoại chưa tồn tại
         /// </returns>
         /// CreatedBy: LMDuc(27/04/2021)
-        public bool CheckPhoneNumberExist(string phonNumber)
+        public bool CheckPhoneNumberExist(string phoneNumber)
         {
             using (dbConnection = new MySqlConnection(connectionString))
             {
                 DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@m_PhoneNumber", phonNumber);
+                parameters.Add("@m_PhoneNumber", phoneNumber);
                 var check = dbConnection.QueryFirstOrDefault<bool>("Proc_CheckPhoneNumberExists", param: parameters, commandType: CommandType.StoredProcedure);
                 return check;
             }

@@ -1,57 +1,46 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using MISA.CukCuk.Core.Entities;
+using MISA.CukCuk.Core.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Data;
-using MySqlConnector;
-using Dapper;
-using MISA.CukCuk.Core.Interfaces.Services;
-using MISA.CukCuk.Core.Interfaces.Repository;
-using MISA.CukCuk.Core.Entities;
-
-
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MISA.CukCuk.Api.Controllers
 {
     /// <summary>
-    /// Controler Customer
+    /// Controler Customer Group
     /// </summary>
     /// CreateBy: LMDuc(27/04/2021)
     /// 
     [Route("api/v1/[controller]s")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomerGroupController : ControllerBase
     {
-        ICustomerService _customerService;
-        ICustomerRepository _customerRepository;
-
-        public CustomerController(ICustomerService customerService, ICustomerRepository customerRepository)
+        ICustomerGroupRepository _customerGroupRepository;
+        public CustomerGroupController(ICustomerGroupRepository customerGroupRepository)
         {
-            _customerRepository = customerRepository;
-            _customerService = customerService;
+            _customerGroupRepository = customerGroupRepository;
         }
-        // GET: api/<CustomerController>
         /// <summary>
-        /// Lấy dữ liệu toàn bộ khách hàng
+        /// Lấy dữ liệu toàn bộ nhóm khách hàng
         /// </summary>
         /// <returns>
         /// HttpStatusCode 200 - có dữ liệu trả về
         /// HttpStatusCode 204 - không có dữ liệu trả về
         /// </returns>
         /// CreatedBy: LMDuc (27/04/2021)
-        
+
         [HttpGet]
         public IActionResult Get()
         {
             try
             {
-                var customers = _customerRepository.GetAll();
-                if (customers.Count() > 0)
+                var customerGroups = _customerGroupRepository.GetAll();
+                if (customerGroups.Count() > 0)
                 {
-                    return Ok(customers);
+                    return Ok(customerGroups);
                 }
                 else
                 {
@@ -66,7 +55,7 @@ namespace MISA.CukCuk.Api.Controllers
         /// <summary>
         /// Lấy dữ liệu khách hàng theo id
         /// </summary>
-        /// <param name="CustomerId">id khách hàng</param>
+        /// <param name="CustomerGroupId">id nhóm khách hàng</param>
         /// <returns>
         /// HttpStatusCode 200 - có dữ liệu trả về
         /// HttpStatusCode 204 - không có dữ liệu trả về
@@ -74,16 +63,16 @@ namespace MISA.CukCuk.Api.Controllers
         /// CreatedBy: LMDuc (27/04/2021)
 
         // GET api/<CustomerController>/5
-        [HttpGet("{CustomerId}")]
-        public IActionResult Get(Guid CustomerId)
+        [HttpGet("{CustomerGroupId}")]
+        public IActionResult Get(Guid CustomerGroupId)
         {
             try
             {
-                var customer = _customerRepository.GetById(CustomerId);
+                var customerGroup = _customerGroupRepository.GetById(CustomerGroupId);
                 // Trả về kết quả cho người dùng
-                if (customer != null)
+                if (customerGroup != null)
                 {
-                    return Ok(customer);
+                    return Ok(customerGroup);
                 }
                 else
                 {
@@ -100,7 +89,7 @@ namespace MISA.CukCuk.Api.Controllers
         /// <summary>
         /// Thêm mới khách hàng
         /// </summary>
-        /// <param name="customer">thông tin khách hàng</param>
+        /// <param name="customerGroup">thông tin khách hàng</param>
         /// <returns>
         /// HttpStatusCode 201 - thêm mới thành công
         /// HttpStatusCode 204 - không thêm được vào db
@@ -109,11 +98,12 @@ namespace MISA.CukCuk.Api.Controllers
         /// </returns>
         /// CreatedBy: LMDuc (27/04/2021)
         [HttpPost]
-        public IActionResult Post(Customer customer)
+        public IActionResult Post(CustomerGroup customerGroup)
         {
-            
+            try
+            {
                 // Thực hiện thêm dữ liệu
-                var rowAffect = _customerService.Insert(customer);
+                var rowAffect = _customerGroupRepository.Insert(customerGroup);
                 if (rowAffect > 0)
                 {
                     return StatusCode(200, rowAffect);
@@ -122,26 +112,30 @@ namespace MISA.CukCuk.Api.Controllers
                 {
                     return NoContent();
                 }
-            
-           
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         /// <summary>
-        /// Sửa thông tin khách hàng
+        /// Sửa thông tin nhóm khách hàng
         /// </summary>
-        /// <param name="customer">thông tin khách hàng</param>
+        /// <param name="customerGroup">thông tin  nhóm khách hàng</param>
         /// <return>
         /// HttpStatusCode 200 - sửa thành công
         /// HttpStatusCode 204 - Không lưu được vào db
         /// </return>
         /// CreatedBy: LMDuc (27/04/2021)
         // PUT api/<CustomerController>/5
-        [HttpPut("{CustomerId}")]
-        public IActionResult Put( Customer customer)
+        [HttpPut("{CustomerGroupId}")]
+        public IActionResult Put(CustomerGroup customerGroup)
         {
             try
             {
-                var rowAffect = _customerService.Update(customer);
+                var rowAffect = _customerGroupRepository.Update(customerGroup);
                 //4. kiểm tra kết quả
                 if (rowAffect != null)
                 {
@@ -162,7 +156,7 @@ namespace MISA.CukCuk.Api.Controllers
         /// <summary>
         /// Xóa khách hàng theo id
         /// </summary>
-        /// <param name="id"> id khách hàng</param>
+        /// <param name="id"> id nhóm khách hàng</param>
         /// <return>
         /// HttpStatusCode 200 - sửa thành công
         /// HttpStatusCode 204 - Không lưu được vào db
@@ -173,7 +167,7 @@ namespace MISA.CukCuk.Api.Controllers
         {
             try
             {
-                var rowAffect = _customerRepository.Delete(id);
+                var rowAffect = _customerGroupRepository.Delete(id);
                 if (rowAffect != null)
                 {
                     return Ok(rowAffect);

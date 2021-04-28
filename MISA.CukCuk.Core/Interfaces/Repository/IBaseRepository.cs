@@ -40,7 +40,7 @@ namespace MISA.CukCuk.Core.Interfaces.Repository
         /// <param name="entity">object</param>
         /// <returns>Số bản ghi cập nhật thành công</returns>
         /// CreatedBy: LMDuc (27/04/2021)
-        public int Update(MISAEntity entity);
+        public int Update(Guid entityId, MISAEntity entity);
         /// <summary>
         /// Xóa bảng ghi theo id
         /// </summary>

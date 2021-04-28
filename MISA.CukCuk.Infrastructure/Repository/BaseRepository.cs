@@ -48,7 +48,7 @@ namespace MISA.CukCuk.Infrastructure.Repository
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add($"@{tableName}Id", entityId);
-                var rowsAffect = dbConnection.Execute($"Proc_Delete{tableName}ById", param: parameters,
+                var rowsAffect = dbConnection.Execute($"Proc_Delete{tableName}", param: parameters,
                     commandType: CommandType.StoredProcedure);
                 return rowsAffect;
             }
@@ -108,7 +108,7 @@ namespace MISA.CukCuk.Infrastructure.Repository
         /// <param name="entity">dữ liệu bản ghi</param>
         /// <returns>số bản ghi được cập nhật</returns>
         /// CreatedBy: LMDuc (27/04/2021)
-        public int Update(MISAEntity entity)
+        public int Update(Guid entityId, MISAEntity entity)
         {
             using (dbConnection = new MySqlConnection(connectionString))
             {

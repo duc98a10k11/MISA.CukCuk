@@ -134,12 +134,12 @@ namespace MISA.CukCuk.Api.Controllers
         /// CreatedBy: LMDuc (27/04/2021)
         // PUT api/<CustomerController>/5
         [HttpPut("{CustomerGroupId}")]
-        public IActionResult Put(CustomerGroup customerGroup)
+        public IActionResult Put(Guid customerGroupId, CustomerGroup customerGroup)
         {
             try
             {
                 //thực hiện cập nhật dữ liệu
-                var rowAffect = _customerGroupRepository.Update(customerGroup);
+                var rowAffect = _customerGroupRepository.Update(customerGroupId,customerGroup);
                 // kiểm tra kết quả
                 if (rowAffect > 0)
                 {

@@ -147,22 +147,31 @@ namespace MISA.CukCuk.Api.Controllers
         /// CreatedBy: LMDuc (27/04/2021)
         // PUT api/<CustomerController>/5
         [HttpPut("{CustomerId}")]
-        public IActionResult Put( Customer customer)
+        public IActionResult Put(Guid customerID ,Customer customer)
         {
             try
             {
-                //Thực hiện cập nhật
-                var rowAffect = _customerService.Update(customer);
-                //4. kiểm tra kết quả
-                if (rowAffect > 0)
+                //kiểm tra id customer
+                if (customer.CustomerId == customerID)
                 {
-                    return Ok(rowAffect);
+                    //Thực hiện cập nhật
+                    var rowAffect = _customerService.Update(customerID,customer);
+                    //4. kiểm tra kết quả
+                    if (rowAffect > 0)
+                    {
+                        return Ok(rowAffect);
+                    }
+                    else
+                    {
+                        return NoContent();
+
+                    }
                 }
                 else
                 {
                     return NoContent();
-
                 }
+               
             }
             catch (Exception)
             {

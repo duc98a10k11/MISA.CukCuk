@@ -82,9 +82,9 @@ namespace MISA.CukCuk.Core.Services
         /// <param name="entity">bản ghi cần cập nhật</param>
         /// <returns></returns>
         /// CreatedBy: LMDuc (27/04/2021)
-        public int Update(MISAEntity entity)
+        public int Update(Guid entityId, MISAEntity entity)
         {
-            return _baseRepository.Update(entity);
+            return _baseRepository.Update(entityId,entity);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using MISA.CukCuk.AppCore.Entities;
 using MISA.CukCuk.AppCore.Interfaces.Repository;
 using MySqlConnector;
@@ -13,20 +14,31 @@ namespace MISA.CukCuk.Infrastructure.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
+        IConfiguration _configuration;
+        public CustomerRepository(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public bool CheckCustomerCodeExists(string customerCode)
         {
-            throw new NotImplementedException();
+            //IDbConnection dbconnection = new MySqlConnection(_configuration.GetConnectionString("connectionDB"));
+            //DynamicParameters dynamicParameters = new DynamicParameters();
+            //dynamicParameters.Add("@m_CustomerCode", customerCode);
+            //var customerCodeExists = dbconnection.QueryFirstOrDefault<bool>("Proc_CheckCustomerCodeExists", dynamicParameters, commandType: CommandType.StoredProcedure);
+            //return customerCodeExists;
+
+            using (IDbConnection dbconnection = new MySqlConnection(_configuration.GetConnectionString("connectionDB")))
+            {
+                DynamicParameters dynamicParameters = new DynamicParameters();
+                dynamicParameters.Add("@m_CustomerCode", customerCode);
+                var customerCodeExists = dbconnection.QueryFirstOrDefault<bool>("Proc_CheckCustomerCodeExists", dynamicParameters, commandType: CommandType.StoredProcedure);
+                return customerCodeExists;
+            }
         }
 
         public int Delete(Guid customerId)
         {
-            string connectionString = "" +
-                 "Host = 47.241.69.179;" +
-                 "Port = 3306;" +
-                 "Database = MF0_NVManh_CukCuk02;" +
-                 "User Id= dev;" +
-                 "Password = 12345678;";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
+            IDbConnection dbConnection = new MySqlConnection(_configuration.GetConnectionString("connectionDB"));
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@CustomerId", customerId);
             var rowsAffect = dbConnection.Execute("Proc_DeleteCustomer", param: parameters,commandType: CommandType.StoredProcedure);
@@ -35,15 +47,8 @@ namespace MISA.CukCuk.Infrastructure.Repository
 
         public IEnumerable<Customer> GetAll()
         {
-            //1. Khởi tạo Connection
-            string connectionString = "" +
-               "Host = 47.241.69.179;" +
-               "Port = 3306;" +
-               "User Id = dev;" +
-               "Password = 12345678;" +
-               "Database = MF0_NVManh_CukCuk02;";
             //2. Kết nối connection
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
+            IDbConnection dbConnection = new MySqlConnection(_configuration.GetConnectionString("connectionDB"));
             //3. Lấy dữ liệu từ DB
             var customers = dbConnection.Query<Customer>("Proc_GetCustomers", commandType: CommandType.StoredProcedure);
             //4. Trả về kết quả
@@ -52,13 +57,7 @@ namespace MISA.CukCuk.Infrastructure.Repository
 
         public Customer GetCustomerById(Guid customerId)
         {
-            string connectionString = "" +
-              "Host = 47.241.69.179;" +
-              "Port = 3306;" +
-              "Database = MF0_NVManh_CukCuk02;" +
-              "User Id= dev;" +
-              "Password = 12345678;";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
+            IDbConnection dbConnection = new MySqlConnection(_configuration.GetConnectionString("connectionDB"));
             //var customers = dbConnection.Query<Customer>("SELECT * FROM Customer WHERE 1=0");
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@CustomerId", customerId);
@@ -68,26 +67,14 @@ namespace MISA.CukCuk.Infrastructure.Repository
 
         public int Insert(Customer customer)
         {
-            string connectionString = "" +
-                   "Host = 47.241.69.179;" +
-                   "Port = 3306;" +
-                   "Database = MF0_NVManh_CukCuk02;" +
-                   "User Id= dev;" +
-                   "Password = 12345678;";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
+            IDbConnection dbConnection = new MySqlConnection(_configuration.GetConnectionString("connectionDB"));
             var rowsAffect = dbConnection.Execute("Proc_InsertCustomer", param: customer,commandType: CommandType.StoredProcedure);
             return rowsAffect;
         }
 
         public int Update(Customer customer)
         {
-            string connectionString = "" +
-                  "Host = 47.241.69.179;" +
-                  "Port = 3306;" +
-                  "Database = MF0_NVManh_CukCuk02;" +
-                  "User Id= dev;" +
-                  "Password = 12345678;";
-            IDbConnection dbConnection = new MySqlConnection(connectionString);
+            IDbConnection dbConnection = new MySqlConnection(_configuration.GetConnectionString("connectionDB"));
             var rowsAffect = dbConnection.Execute("Proc_UpdateCustomer", param: customer, commandType: CommandType.StoredProcedure);
             return rowsAffect;
         }

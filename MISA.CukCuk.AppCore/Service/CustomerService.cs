@@ -1,4 +1,5 @@
 ﻿using MISA.CukCuk.AppCore.Entities;
+using MISA.CukCuk.AppCore.Exceptions;
 using MISA.CukCuk.AppCore.Interfaces.Repository;
 using MISA.CukCuk.AppCore.Interfaces.Service;
 using System;
@@ -40,7 +41,8 @@ namespace MISA.CukCuk.AppCore.Service
         /// CreateBy: LMDuc (20/04/2021)
         public bool CheckCustomerCodeExists(string customerCode)
         {
-            throw new NotImplementedException();
+            var check = _customerRepository.CheckCustomerCodeExists(customerCode);
+            return check;
         }
 
         /// <summary>
@@ -86,6 +88,16 @@ namespace MISA.CukCuk.AppCore.Service
         /// CreatedBy: LMDuc (20/04/2021)
         public int Insert(Customer customer)
         {
+            //// Validate dữ liệu:
+            ////- check các thông tin bắt buộc nhập
+            CustomerException.CheckCustomerCodeEmpty(customer.CustomerCode);
+            //// - check mã có trùng hay không?
+            if (CheckCustomerCodeExists(customer.CustomerCode))
+            {
+                throw new CustomerException("MÃ khách hàng đã tồn tại trên hệ thống.");
+               
+            }
+            
             var rowAffect = _customerRepository.Insert(customer);
             return rowAffect;
         }

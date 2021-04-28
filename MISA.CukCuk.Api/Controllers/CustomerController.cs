@@ -100,40 +100,6 @@ namespace MISA.CukCuk.Api.Controllers
         public IActionResult Post(Customer customer)
         {
 
-
-            //// Validate dữ liệu:
-            ////- check các thông tin bắt buộc nhập
-            //if (string.IsNullOrEmpty(customer.CustomerCode))
-            //{
-            //    var response = new
-            //    {
-            //        devMsg = "Mã khách hàng không được phép để trống",
-            //        MISACode = "001"
-            //    };
-            //    return BadRequest(response);
-            //}
-            //// - check mã có trùng hay không?
-            //string connectionString = "" +
-            //    "Host = 47.241.69.179;" +
-            //    "Port = 3306;" +
-            //    "User Id = dev;" +
-            //    "Password = 12345678;" +
-            //    "Database = MF0_NVManh_CukCuk02;";
-            //IDbConnection dbconnection = new MySqlConnection(connectionString);
-            //DynamicParameters dynamicParameters = new DynamicParameters();
-            //dynamicParameters.Add("@m_CustomerCode", customer.CustomerCode);
-            //var customerCodeExists = dbconnection.QueryFirstOrDefault<bool>("Proc_CheckCustomerCodeExists", dynamicParameters, commandType: CommandType.StoredProcedure);
-            //if (customerCodeExists)
-            //{
-            //    var response = new
-            //    {
-            //        devMsg = "Mã khách hàng đã tồn tại trong hệ thống!",
-            //        MISACode = "002"
-            //    };
-            //    return BadRequest(response);
-            //}
-
-
             // Thực hiện thêm dữ liệu
             int rowAffect = _customerService.Insert(customer);
             if (rowAffect > 0)
@@ -178,6 +144,13 @@ namespace MISA.CukCuk.Api.Controllers
             
 
         }
+
+        /// <summary>
+        /// Xóa khách hàng theo id
+        /// </summary>
+        /// <param name="customerId">id khách hàng</param>
+        /// <returns></returns>
+        /// CreatedBy: LMDuc (20/04/2021)
         [HttpDelete("{customerId}")]
         public IActionResult Delete(Guid customerId)
         {

@@ -11,6 +11,7 @@ namespace MISA.CukCuk.Core.Entities
     /// Thông tin khách hàng
     /// </summary>
     /// CreatedBy: LMDuc (27/04/2021)
+    /// ModifiedBy: LMDuc (29/04/2021)
     public class Customer
     {
         /// <summary>
@@ -21,14 +22,14 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Mã khách hàng
         /// </summary>
-        [MISARequired]
-        [MISAMaxLength(20,msg:"")]
+        [MISARequired] // validate chuỗi rỗng
+        [MISAMaxLength(20,msg:"")] // validate độ dài tối đa nhập vào
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Họ và tên
         /// </summary>
-        [MISARequired]
+        [MISARequired] // validate chuỗi rỗng
         public string FullName { get; set; }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Số điện thoại
         /// </summary>
-        [MISARequired]
+        [MISARequired] // validate chuỗi rỗng
         public string PhoneNumber { get; set; }
 
         /// <summary>
@@ -70,7 +71,7 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Email
         /// </summary>
-        [MISARequired]
+        [MISARequired] // validate chuỗi rỗng
         public string Email { get; set; }
 
         /// <summary>

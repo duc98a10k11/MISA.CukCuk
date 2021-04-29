@@ -32,23 +32,6 @@ namespace MISA.CukCuk.Core.Services
         {
 
                
-                // xác định xem property nào sẽ thực hiện validate bắt buộc nhập
-
-
-
-
-                //// ép entity về kiểu customer
-                //var customer = entity as Customer;
-                //// validate dữ liệu:
-                //// - check các thông tin bắt buộc nhập:
-                //CustomerException.CheckCustomerCodeEmpty(customer.CustomerCode);
-                //// check trùng mã: 
-
-                //var isExist = _customerRepository.CheckCustomerCodeExist(customer.CustomerCode);
-                //if (isExist == true)
-                //{
-                //    throw new CustomerException("Mã khách hàng đã tồn tại trên hệ thống!");
-                //}
             
         }
     }

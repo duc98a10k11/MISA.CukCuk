@@ -73,6 +73,7 @@ namespace MISA.CukCuk.Core.Services
         /// </summary>
         /// <param name="entity">dữ liệu cần validate</param>
         /// CreatedBy: LMDuc (27/04/2021)
+        /// ModifiedBy: LMDuc (29/04/2021)
         private void Validate(MISAEntity entity)
         {
             //lấy ra tất cả các property của class:
@@ -113,6 +114,12 @@ namespace MISA.CukCuk.Core.Services
             }
             CustomValidate(entity);
         }
+
+        /// <summary>
+        /// validate dữ liệu dành cho các service con
+        /// </summary>
+        /// <param name="entity">object cần validate</param>
+        /// CreatedBy: LMDuc (29/04/2021)
         protected virtual void CustomValidate(MISAEntity entity)
         {
 

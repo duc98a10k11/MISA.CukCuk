@@ -20,5 +20,15 @@ namespace MISA.CukCuk.Core.Services
         {
             _customerGroupRepository = customerGroupRepository;
         }
+
+        /// <summary>
+        /// validate dữ liệu dịch vụ khách hàng
+        /// </summary>
+        /// <param name="entity">dữ liệu cần validate</param>
+        /// CreatedBy: LMDuc (29/04/2021)
+        protected override void CustomValidate(CustomerGroup entity)
+        {
+            
+        }
     }
 }

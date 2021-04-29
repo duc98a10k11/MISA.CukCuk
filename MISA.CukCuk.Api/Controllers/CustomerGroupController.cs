@@ -14,7 +14,7 @@ namespace MISA.CukCuk.Api.Controllers
     /// Controler Customer Group
     /// </summary>
     /// CreateBy: LMDuc(27/04/2021)
-    /// 
+    /// ModifiedBy: LMDuc (29/04/2021)
     [Route("api/v1/[controller]s")]
     [ApiController]
     public class CustomerGroupController : ControllerBase

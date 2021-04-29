@@ -91,8 +91,7 @@ namespace MISA.CukCuk.Core.Services
                         var msgError = (requiredProperties[0] as MISARequired).MsgError;
                         if (string.IsNullOrEmpty(msgError))
                         {
-                            // gán chuỗi giá trị của Msg_Error_requied trong Resources
-                            msgError = Properties.Resources.Msg_Error_Requied;
+                            msgError = $"{property.Name}"+ Properties.Resources.Msg_Error_Requied;
                         }
                         throw new CustomerException(msgError);
                     }
@@ -107,7 +106,7 @@ namespace MISA.CukCuk.Core.Services
                     if (propertyValue.ToString().Length > maxLength)
                     {
                         //var msgError = (maxLengthProperties[0] as MISAMaxLength).MsgError;
-                        var msgError = Properties.Resources.Msg_Error_MaxLength;
+                        var msgError = $"{property.Name} " + Properties.Resources.Msg_Error_MaxLength + maxLength;
                         throw new CustomerException(msgError);
                     }
                 }

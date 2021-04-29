@@ -61,7 +61,7 @@ namespace MISA.CukCuk.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã dài quá số lượng ký tự.
+        ///   Looks up a localized string similar to có số lượng ký tự vượt quá .
         /// </summary>
         public static string Msg_Error_MaxLength {
             get {
@@ -70,7 +70,7 @@ namespace MISA.CukCuk.Core.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thông tin này không được phép để trống.
+        ///   Looks up a localized string similar to  không được phép để trống!.
         /// </summary>
         public static string Msg_Error_Requied {
             get {

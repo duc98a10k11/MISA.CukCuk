@@ -21,8 +21,8 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Mã khách hàng
         /// </summary>
-        [MISARequired("Mã khách hàng không được phép để trống")]
-        [MISAMaxLength(20,msg:"Mã khách hàng không được dài quá 20 kí tự")]
+        [MISARequired]
+        [MISAMaxLength(20,msg:"")]
         public string CustomerCode { get; set; }
 
         /// <summary>
@@ -49,6 +49,7 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Số điện thoại
         /// </summary>
+        [MISARequired]
         public string PhoneNumber { get; set; }
 
         /// <summary>
@@ -69,6 +70,7 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Email
         /// </summary>
+        [MISARequired]
         public string Email { get; set; }
 
         /// <summary>

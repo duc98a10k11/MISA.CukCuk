@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MISA.CukCuk.Core.Entities;
 using MISA.CukCuk.Core.Interfaces.Repository;
+using MISA.CukCuk.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,11 @@ namespace MISA.CukCuk.Api.Controllers
     public class CustomerGroupController : ControllerBase
     {
         ICustomerGroupRepository _customerGroupRepository;
-        public CustomerGroupController(ICustomerGroupRepository customerGroupRepository)
+        ICustomerGroupService _customerGroupService;
+        public CustomerGroupController(ICustomerGroupRepository customerGroupRepository, ICustomerGroupService customerGroupService)
         {
             _customerGroupRepository = customerGroupRepository;
+            _customerGroupService = customerGroupService;
         }
         /// <summary>
         /// Lấy dữ liệu toàn bộ nhóm khách hàng
@@ -105,7 +108,7 @@ namespace MISA.CukCuk.Api.Controllers
             try
             {
                 // Thực hiện thêm dữ liệu
-                var rowAffect = _customerGroupRepository.Insert(customerGroup);
+                var rowAffect = _customerGroupService.Insert(customerGroup);
                 //kiểm tra và trả về kết quả
                 if (rowAffect > 0)
                 {
@@ -139,7 +142,7 @@ namespace MISA.CukCuk.Api.Controllers
             try
             {
                 //thực hiện cập nhật dữ liệu
-                var rowAffect = _customerGroupRepository.Update(customerGroupId,customerGroup);
+                var rowAffect = _customerGroupService.Update(customerGroupId,customerGroup);
                 // kiểm tra kết quả
                 if (rowAffect > 0)
                 {
@@ -172,7 +175,7 @@ namespace MISA.CukCuk.Api.Controllers
             try
             {
                 // thực hiện xóa
-                var rowAffect = _customerGroupRepository.Delete(id);
+                var rowAffect = _customerGroupService.Delete(id);
                 // kiểm tra kết quả
                 if (rowAffect > 0)
                 {

@@ -21,7 +21,7 @@ namespace MISA.CukCuk.Core.Entities
         /// Tên nhóm khách hàng
         /// </summary>
         
-        [MISARequired("Tên nhóm khách hàng không được phép để trống")]
+        [MISARequired]
         public string CustomerGroupName { get; set; }
         /// <summary>
         /// id của cha (khóa ngoại)

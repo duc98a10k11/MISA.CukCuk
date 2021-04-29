@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.CukCuk.Core.AttributeCustom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Tên nhóm khách hàng
         /// </summary>
+        
+        [MISARequired("Tên nhóm khách hàng không được phép để trống")]
         public string CustomerGroupName { get; set; }
         /// <summary>
         /// id của cha (khóa ngoại)

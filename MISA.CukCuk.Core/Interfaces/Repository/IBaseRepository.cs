@@ -10,6 +10,7 @@ namespace MISA.CukCuk.Core.Interfaces.Repository
     /// Interface Base Repository
     /// </summary>
     /// <typeparam name="MISAEntity"></typeparam>
+    /// CreatedBy: LMDuc (28/04/2021)
     public interface IBaseRepository<MISAEntity> where MISAEntity:class
     {
         /// <summary>

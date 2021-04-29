@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MISA.CukCuk.Core.AttributeCustom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,14 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Mã khách hàng
         /// </summary>
+        [MISARequired("Mã khách hàng không được phép để trống")]
+        [MISAMaxLength(20,msg:"Mã khách hàng không được dài quá 20 kí tự")]
         public string CustomerCode { get; set; }
 
         /// <summary>
         /// Họ và tên
         /// </summary>
+        [MISARequired]
         public string FullName { get; set; }
 
         /// <summary>

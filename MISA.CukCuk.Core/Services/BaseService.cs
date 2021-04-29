@@ -1,4 +1,6 @@
-﻿using MISA.CukCuk.Core.Interfaces.Repository;
+﻿using MISA.CukCuk.Core.AttributeCustom;
+using MISA.CukCuk.Core.Exceptions;
+using MISA.CukCuk.Core.Interfaces.Repository;
 using MISA.CukCuk.Core.Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -71,7 +73,48 @@ namespace MISA.CukCuk.Core.Services
         /// </summary>
         /// <param name="entity">dữ liệu cần validate</param>
         /// CreatedBy: LMDuc (27/04/2021)
-        protected virtual void Validate(MISAEntity entity)
+        private void Validate(MISAEntity entity)
+        {
+            //lấy ra tất cả các property của class:
+            var properties = typeof(MISAEntity).GetProperties();
+            foreach (var property in properties)
+            {
+                var requiredProperties = property.GetCustomAttributes(typeof(MISARequired), true);
+                var maxLengthProperties = property.GetCustomAttributes(typeof(MISAMaxLength), true);
+                if (requiredProperties.Length > 0)
+                {
+                    // lấy giá trị:
+                    var propertyValue = property.GetValue(entity);
+                    // kiểm tra giá trị
+                    if (string.IsNullOrEmpty(propertyValue.ToString()))
+                    {
+                        var msgError = (requiredProperties[0] as MISARequired).MsgError;
+                        if (string.IsNullOrEmpty(msgError))
+                        {
+                            // gán chuỗi giá trị của Msg_Error_requied trong Resources
+                            msgError = Properties.Resources.Msg_Error_Requied;
+                        }
+                        throw new CustomerException(msgError);
+                    }
+                }
+                //check maxlength:
+                if (maxLengthProperties.Length > 0)
+                {
+                    //lấy giá trị 
+                    var propertyValue = property.GetValue(entity);
+                    var maxLength = (maxLengthProperties[0] as MISAMaxLength).MaxLength;
+                    // kiểm tra giá trị
+                    if (propertyValue.ToString().Length > maxLength)
+                    {
+                        //var msgError = (maxLengthProperties[0] as MISAMaxLength).MsgError;
+                        var msgError = Properties.Resources.Msg_Error_MaxLength;
+                        throw new CustomerException(msgError);
+                    }
+                }
+            }
+            CustomValidate(entity);
+        }
+        protected virtual void CustomValidate(MISAEntity entity)
         {
 
         }

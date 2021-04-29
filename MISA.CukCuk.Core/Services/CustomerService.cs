@@ -1,4 +1,5 @@
-﻿using MISA.CukCuk.Core.Entities;
+﻿using MISA.CukCuk.Core.AttributeCustom;
+using MISA.CukCuk.Core.Entities;
 using MISA.CukCuk.Core.Exceptions;
 using MISA.CukCuk.Core.Interfaces.Repository;
 using MISA.CukCuk.Core.Interfaces.Services;
@@ -27,22 +28,28 @@ namespace MISA.CukCuk.Core.Services
         /// </summary>
         /// <param name="entity">dữ liệu cần validate</param>
         /// CreatedBy: LMDuc(27/04/2021)
-        protected override void Validate(Customer entity)
+        protected override void CustomValidate(Customer entity)
         {
-            if (entity is Customer)
-            {
-                // ép entity về kiểu customer
-                var customer = entity as Customer;
-                // validate dữ liệu:
-                // - check các thông tin bắt buộc nhập:
-                CustomerException.CheckCustomerCodeEmpty(customer.CustomerCode);
-                // check trùng mã: 
-                var isExist = _customerRepository.CheckCustomerCodeExist(customer.CustomerCode);
-                if (isExist == true)
-                {
-                    throw new CustomerException("Mã khách hàng đã tồn tại trên hệ thống!");
-                }
-            }
+
+               
+                // xác định xem property nào sẽ thực hiện validate bắt buộc nhập
+
+
+
+
+                //// ép entity về kiểu customer
+                //var customer = entity as Customer;
+                //// validate dữ liệu:
+                //// - check các thông tin bắt buộc nhập:
+                //CustomerException.CheckCustomerCodeEmpty(customer.CustomerCode);
+                //// check trùng mã: 
+
+                //var isExist = _customerRepository.CheckCustomerCodeExist(customer.CustomerCode);
+                //if (isExist == true)
+                //{
+                //    throw new CustomerException("Mã khách hàng đã tồn tại trên hệ thống!");
+                //}
+            
         }
     }
 }

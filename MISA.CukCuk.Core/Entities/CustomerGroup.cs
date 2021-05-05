@@ -18,7 +18,7 @@ namespace MISA.CukCuk.Core.Entities
         /// Khóa chính
         /// </summary>
         public Guid? CustomerGroupId { get; set; }
-       
+
         /// <summary>
         /// Tên nhóm khách hàng
         /// </summary>
@@ -33,7 +33,7 @@ namespace MISA.CukCuk.Core.Entities
         /// <summary>
         /// Diễn giải
         /// </summary>
-        public string  Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Ngày tạo bản ghi

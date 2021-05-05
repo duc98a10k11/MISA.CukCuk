@@ -38,19 +38,19 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            
-                //lấy dữ liệu
-                var customerGroups = _customerGroupRepository.GetAll();
-                //kiểm tra và trả về kết quả
-                if (customerGroups.Count() > 0)
-                {
-                    return Ok(customerGroups);
-                }
-                else
-                {
-                    return NoContent();
-                }
-            
+
+            //lấy dữ liệu
+            var customerGroups = _customerGroupRepository.GetAll();
+            //kiểm tra và trả về kết quả
+            if (customerGroups.Count() > 0)
+            {
+                return Ok(customerGroups);
+            }
+            else
+            {
+                return NoContent();
+            }
+
         }
 
         /// <summary>
@@ -65,19 +65,19 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpGet("{CustomerGroupId}")]
         public IActionResult Get(Guid CustomerGroupId)
         {
-           
-                //lấy dữ liệu từ db
-                var customerGroup = _customerGroupRepository.GetById(CustomerGroupId);
-                // Trả về kết quả cho người dùng
-                if (customerGroup != null)
-                {
-                    return Ok(customerGroup);
-                }
-                else
-                {
-                    return NoContent();
-                }
-          
+
+            //lấy dữ liệu từ db
+            var customerGroup = _customerGroupRepository.GetById(CustomerGroupId);
+            // Trả về kết quả cho người dùng
+            if (customerGroup != null)
+            {
+                return Ok(customerGroup);
+            }
+            else
+            {
+                return NoContent();
+            }
+
 
         }
 
@@ -113,8 +113,8 @@ namespace MISA.CukCuk.Api.Controllers
                     return NoContent();
                 }
             }
-                
-           
+
+
         }
 
         /// <summary>
@@ -130,20 +130,20 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPut("{CustomerGroupId}")]
         public IActionResult Put(Guid customerGroupId, CustomerGroup customerGroup)
         {
-           
-                //thực hiện cập nhật dữ liệu
-                var rowAffect = _customerGroupService.Update(customerGroupId,customerGroup);
-                // kiểm tra kết quả
-                if (rowAffect > 0)
-                {
-                    return Ok(rowAffect);
-                }
-                else
-                {
-                    return NoContent();
 
-                }
-         
+            //thực hiện cập nhật dữ liệu
+            var rowAffect = _customerGroupService.Update(customerGroupId, customerGroup);
+            // kiểm tra kết quả
+            if (rowAffect > 0)
+            {
+                return Ok(rowAffect);
+            }
+            else
+            {
+                return NoContent();
+
+            }
+
         }
         /// <summary>
         /// Xóa khách hàng theo id
@@ -157,19 +157,19 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-           
-                // thực hiện xóa
-                var rowAffect = _customerGroupService.Delete(id);
-                // kiểm tra kết quả
-                if (rowAffect > 0)
-                {
-                    return Ok(rowAffect);
-                }
-                else
-                {
-                    return NoContent();
-                }
-           
+
+            // thực hiện xóa
+            var rowAffect = _customerGroupService.Delete(id);
+            // kiểm tra kết quả
+            if (rowAffect > 0)
+            {
+                return Ok(rowAffect);
+            }
+            else
+            {
+                return NoContent();
+            }
+
         }
     }
 }

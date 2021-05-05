@@ -23,7 +23,7 @@ namespace MISA.CukCuk.Core.Entities
         /// Mã khách hàng
         /// </summary>
         [MISARequired] // validate chuỗi rỗng
-        [MISAMaxLength(20,msg:"")] // validate độ dài tối đa nhập vào
+        [MISAMaxLength(20, msg: "")] // validate độ dài tối đa nhập vào
         public string CustomerCode { get; set; }
 
         /// <summary>

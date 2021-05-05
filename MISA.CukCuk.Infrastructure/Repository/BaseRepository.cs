@@ -98,7 +98,7 @@ namespace MISA.CukCuk.Infrastructure.Repository
             using (dbConnection = new MySqlConnection(connectionString))
             {
                 var rowAffect = dbConnection.Execute($"Proc_Insert{tableName}", param: entity, commandType: CommandType.StoredProcedure);
-                    return rowAffect;
+                return rowAffect;
             }
         }
 

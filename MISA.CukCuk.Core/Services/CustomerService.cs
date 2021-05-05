@@ -31,8 +31,8 @@ namespace MISA.CukCuk.Core.Services
         protected override void CustomValidate(Customer entity)
         {
 
-               
-            
+
+
         }
     }
 }

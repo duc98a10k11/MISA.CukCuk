@@ -16,7 +16,7 @@ namespace MISA.CukCuk.Core.Services
     public class CustomerGroupService : BaseService<CustomerGroup>, ICustomerGroupService
     {
         ICustomerGroupRepository _customerGroupRepository;
-        public CustomerGroupService(ICustomerGroupRepository customerGroupRepository) :base(customerGroupRepository)
+        public CustomerGroupService(ICustomerGroupRepository customerGroupRepository) : base(customerGroupRepository)
         {
             _customerGroupRepository = customerGroupRepository;
         }
@@ -28,7 +28,7 @@ namespace MISA.CukCuk.Core.Services
         /// CreatedBy: LMDuc (29/04/2021)
         protected override void CustomValidate(CustomerGroup entity)
         {
-            
+
         }
     }
 }

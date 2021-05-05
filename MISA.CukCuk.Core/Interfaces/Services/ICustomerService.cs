@@ -13,6 +13,6 @@ namespace MISA.CukCuk.Core.Interfaces.Services
     /// CreateBY: LMDuc (27/04/2021)
     public interface ICustomerService : IBaseService<Customer>
     {
-        
+
     }
 }

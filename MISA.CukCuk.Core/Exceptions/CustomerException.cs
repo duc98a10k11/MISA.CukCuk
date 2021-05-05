@@ -10,7 +10,7 @@ namespace MISA.CukCuk.Core.Exceptions
     /// Exception Customer
     /// </summary>
     /// CreatedBY: LMDuc (27/04/2021)
-    public class CustomerException:Exception
+    public class CustomerException : Exception
     {
         public CustomerException(string msg) : base(msg)
         {

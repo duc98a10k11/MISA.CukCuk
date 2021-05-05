@@ -92,7 +92,7 @@ namespace MISA.CukCuk.Core.Services
                         var msgError = (requiredProperties[0] as MISARequired).MsgError;
                         if (string.IsNullOrEmpty(msgError))
                         {
-                            msgError = $"{property.Name}"+ Properties.Resources.Msg_Error_Requied;
+                            msgError = $"{property.Name}" + Properties.Resources.Msg_Error_Requied;
                         }
                         throw new CustomerException(msgError);
                     }
@@ -133,7 +133,7 @@ namespace MISA.CukCuk.Core.Services
         /// CreatedBy: LMDuc (27/04/2021)
         public int Update(Guid entityId, MISAEntity entity)
         {
-            return _baseRepository.Update(entityId,entity);
+            return _baseRepository.Update(entityId, entity);
         }
     }
 }

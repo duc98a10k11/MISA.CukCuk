@@ -11,13 +11,13 @@ namespace MISA.CukCuk.Core.AttributeCustom
     /// </summary>
     /// CreatedBy: LMDuc (29/04/2021)
     [AttributeUsage(AttributeTargets.Property)]
-    public class MISARequired: Attribute
+    public class MISARequired : Attribute
     {
         /// <summary>
         /// câu thông báo lỗi
         /// </summary>
         public string MsgError = string.Empty;
-        public MISARequired(string msgError ="")
+        public MISARequired(string msgError = "")
         {
             MsgError = msgError;
         }

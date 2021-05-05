@@ -75,9 +75,9 @@ namespace MISA.CukCuk.Api
                     var response = new
                     {
                         devMsg = exception.Message,
-                        userMsg = "Có lỗi xảy ra vui lòng liên hệ MISA",
-                        MISACode = "002",
-                        Data = "CustomerCode",
+                        userMsg = Properties.Resources.userMsg,
+                        MISACode = Properties.Resources.MISACode,
+                        Data = Properties.Resources.Data,
                     };
                     var result = JsonConvert.SerializeObject(response);
                     context.Response.ContentType = "application/json";
@@ -90,8 +90,8 @@ namespace MISA.CukCuk.Api
                     var response = new
                     {
                         devMsg = exception.Message,
-                        userMsg = "Có lỗi xảy ra vui lòng liên hệ MISA",
-                        MISACode = "002",
+                        userMsg = Properties.Resources.userMsg,
+                        MISACode = Properties.Resources.MISACode,
                         Data = exception
                     };
                     await context.Response.WriteAsJsonAsync(response);

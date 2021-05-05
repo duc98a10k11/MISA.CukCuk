@@ -47,8 +47,8 @@ namespace MISA.CukCuk.Api.Middware
             var response = new
             {
                 devMsg = exception.Message,
-                userMsg = "Có lỗi xảy ra vui lòng liên hệ MISA",
-                MISACode = "002",
+                userMsg = Properties.Resources.userMsg,
+                MISACode = Properties.Resources.MISACode,
                 Data = exception.Data
             };
             var stackTrace = String.Empty;

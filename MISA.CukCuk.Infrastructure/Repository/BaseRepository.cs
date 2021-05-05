@@ -30,7 +30,7 @@ namespace MISA.CukCuk.Infrastructure.Repository
             "Port = 3306;" +
             "Database = MF0_NVManh_CukCuk02;" +
             "User Id= dev;" +
-            "Password = 12345678;";
+            "Password = 12345678;Convert Zero Datetime=true;";
         /// <summary>
         /// dbConnection
         /// </summary>

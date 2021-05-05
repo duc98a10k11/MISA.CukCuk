@@ -38,8 +38,7 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            try
-            {
+            
                 //lấy dữ liệu
                 var customerGroups = _customerGroupRepository.GetAll();
                 //kiểm tra và trả về kết quả
@@ -51,11 +50,7 @@ namespace MISA.CukCuk.Api.Controllers
                 {
                     return NoContent();
                 }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            
         }
 
         /// <summary>
@@ -70,8 +65,7 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpGet("{CustomerGroupId}")]
         public IActionResult Get(Guid CustomerGroupId)
         {
-            try
-            {
+           
                 //lấy dữ liệu từ db
                 var customerGroup = _customerGroupRepository.GetById(CustomerGroupId);
                 // Trả về kết quả cho người dùng
@@ -83,11 +77,7 @@ namespace MISA.CukCuk.Api.Controllers
                 {
                     return NoContent();
                 }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+          
 
         }
 
@@ -105,7 +95,11 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPost]
         public IActionResult Post(CustomerGroup customerGroup)
         {
-            try
+            if (customerGroup.CustomerGroupName == null)
+            {
+                return BadRequest();
+            }
+            else
             {
                 // Thực hiện thêm dữ liệu
                 var rowAffect = _customerGroupService.Insert(customerGroup);
@@ -119,11 +113,8 @@ namespace MISA.CukCuk.Api.Controllers
                     return NoContent();
                 }
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+                
+           
         }
 
         /// <summary>
@@ -139,8 +130,7 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPut("{CustomerGroupId}")]
         public IActionResult Put(Guid customerGroupId, CustomerGroup customerGroup)
         {
-            try
-            {
+           
                 //thực hiện cập nhật dữ liệu
                 var rowAffect = _customerGroupService.Update(customerGroupId,customerGroup);
                 // kiểm tra kết quả
@@ -153,12 +143,7 @@ namespace MISA.CukCuk.Api.Controllers
                     return NoContent();
 
                 }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+         
         }
         /// <summary>
         /// Xóa khách hàng theo id
@@ -172,8 +157,7 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(Guid id)
         {
-            try
-            {
+           
                 // thực hiện xóa
                 var rowAffect = _customerGroupService.Delete(id);
                 // kiểm tra kết quả
@@ -185,12 +169,7 @@ namespace MISA.CukCuk.Api.Controllers
                 {
                     return NoContent();
                 }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+           
         }
     }
 }

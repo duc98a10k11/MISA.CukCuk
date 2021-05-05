@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Data;
-using MySqlConnector;
-using Dapper;
-using MISA.CukCuk.Core.Interfaces.Services;
-using MISA.CukCuk.Core.Interfaces.Repository;
 using MISA.CukCuk.Core.Entities;
+using MISA.CukCuk.Core.Interfaces.Repository;
+using MISA.CukCuk.Core.Interfaces.Services;
+using System;
+using System.Linq;
 
 
 
@@ -142,26 +137,34 @@ namespace MISA.CukCuk.Api.Controllers
         [HttpPut("{CustomerId}")]
         public IActionResult Put(Guid customerID, Customer customer)
         {
-            //kiểm tra id customer, nếu trùng thì cho phép thực hiện cập nhật
-            if (customer.CustomerId == customerID)
+            if (customer.CustomerCode == null)
             {
-                //Thực hiện cập nhật
-                var rowAffect = _customerService.Update(customerID, customer);
-                //4. kiểm tra kết quả
-                if (rowAffect > 0)
+                return BadRequest();
+            }
+            else
+            {
+                //kiểm tra id customer, nếu trùng thì cho phép thực hiện cập nhật
+                if (customer.CustomerId == customerID)
                 {
-                    return Ok(rowAffect);
+                    //Thực hiện cập nhật
+                    var rowAffect = _customerService.Update(customerID, customer);
+                    //4. kiểm tra kết quả
+                    if (rowAffect > 0)
+                    {
+                        return Ok(rowAffect);
+                    }
+                    else
+                    {
+                        return NoContent();
+
+                    }
                 }
                 else
                 {
                     return NoContent();
-
                 }
             }
-            else
-            {
-                return NoContent();
-            }
+
 
         }
         /// <summary>

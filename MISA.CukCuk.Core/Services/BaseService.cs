@@ -87,7 +87,7 @@ namespace MISA.CukCuk.Core.Services
                     // lấy giá trị:
                     var propertyValue = property.GetValue(entity);
                     // kiểm tra giá trị
-                    if (string.IsNullOrEmpty(propertyValue.ToString()))
+                    if (string.IsNullOrEmpty(propertyValue.ToString()) || propertyValue == null)
                     {
                         var msgError = (requiredProperties[0] as MISARequired).MsgError;
                         if (string.IsNullOrEmpty(msgError))
@@ -133,6 +133,7 @@ namespace MISA.CukCuk.Core.Services
         /// CreatedBy: LMDuc (27/04/2021)
         public int Update(Guid entityId, MISAEntity entity)
         {
+            Validate(entity);
             return _baseRepository.Update(entityId, entity);
         }
     }
